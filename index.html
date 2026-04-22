@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>A.K.Vinith</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Light mode variables (default) */
+    :root {
+      --deep-space: #f0f4fc;
+      --electric-blue: #0066cc;
+      --neon-pink: #cc3366;
+      --neon-purple: #8844dd;
+      --cyber-yellow: #d4a000;
+      --glass-bg: rgba(240, 245, 255, 0.75);
+      --border-neon: 1px solid rgba(0, 102, 204, 0.3);
+      --text-glow: none;
+      --text-primary: #1a1a2e;
+      --text-secondary: #2d2d44;
+      --card-bg-solid: #ffffffcc;
+      --hero-bg: linear-gradient(135deg, rgba(0,102,204,0.08), rgba(204,51,102,0.04));
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --badge-bg: rgba(0,102,204,0.12);
+      --badge-text: #0066cc;
+      --footer-border: rgba(0,102,204,0.2);
+    }
+
+    /* Dark mode variables */
+    body.dark {
+      --deep-space: #050b1a;
+      --electric-blue: #00f2ff;
+      --neon-pink: #ff2a7a;
+      --neon-purple: #b026ff;
+      --cyber-yellow: #ffd319;
+      --glass-bg: rgba(5, 15, 30, 0.65);
+      --border-neon: 1px solid rgba(0, 242, 255, 0.4);
+      --text-primary: #eef5ff;
+      --text-secondary: #c4e6ff;
+      --card-bg-solid: rgba(5, 15, 30, 0.7);
+      --hero-bg: linear-gradient(135deg, rgba(0,242,255,0.05), rgba(255,42,122,0.02));
+      --nav-bg: rgba(5, 15, 30, 0.7);
+      --badge-bg: rgba(0,242,255,0.15);
+      --badge-text: #b5f0ff;
+      --footer-border: rgba(0,242,255,0.3);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 20% 30%, #f0f4fc, #e8edf5);
+      color: var(--text-primary);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.2s ease;
+    }
+
+    body.dark {
+      background: radial-gradient(circle at 20% 30%, #0a0f2a, #020617);
+    }
+
+    /* animated grid background */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(var(--electric-blue) 1px, transparent 1px),
+        linear-gradient(90deg, var(--electric-blue) 1px, transparent 1px);
+      background-size: 45px 45px;
+      pointer-events: none;
+      z-index: 0;
+      animation: gridMove 20s linear infinite;
+      opacity: 0.08;
+    }
+
+    body.dark .grid-bg {
+      opacity: 0.12;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(45px, 45px); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* glassmorphic navbar with neon underline */
+    .navbar {
+      position: sticky;
+      top: 1rem;
+      backdrop-filter: blur(16px);
+      background: var(--nav-bg);
+      border-radius: 3rem;
+      border: var(--border-neon);
+      margin: 0 1rem 2rem 1rem;
+      padding: 0.8rem 2rem;
+      z-index: 100;
+      box-shadow: 0 0 20px rgba(0,102,204,0.1);
+    }
+    body.dark .navbar {
+      box-shadow: 0 0 20px rgba(0,242,255,0.15);
+    }
+    .nav-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo-neon {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--electric-blue), var(--neon-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: 0.2s;
+      font-size: 0.9rem;
+    }
+    .nav-links a:hover {
+      color: var(--electric-blue);
+      text-shadow: 0 0 6px var(--electric-blue);
+    }
+    .theme-toggle-neon {
+      background: var(--badge-bg);
+      border: 1px solid var(--electric-blue);
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--electric-blue);
+      transition: 0.2s;
+    }
+    .mobile-menu {
+      display: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: var(--electric-blue);
+    }
+
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--nav-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 2rem;
+        margin-top: 1rem;
+        padding: 1rem;
+      }
+      .nav-links.show { display: flex; }
+      .mobile-menu { display: block; }
+    }
+
+    section {
+      margin: 5rem 0;
+      scroll-margin-top: 6rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(125deg, var(--text-primary), var(--electric-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      border-left: 5px solid var(--neon-pink);
+      padding-left: 1.2rem;
+    }
+
+    /* neon cards - fixed for both themes */
+    .neon-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 1.8rem;
+      border: 1px solid rgba(0, 102, 204, 0.25);
+      transition: all 0.3s ease;
+      height: 100%;
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.1);
+      color: var(--text-primary);
+    }
+    body.dark .neon-card {
+      border: 1px solid rgba(0, 242, 255, 0.3);
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.5);
+    }
+    .neon-card:hover {
+      border-color: var(--electric-blue);
+      transform: translateY(-6px);
+      box-shadow: 0 0 25px rgba(0,102,204,0.15);
+    }
+    body.dark .neon-card:hover {
+      box-shadow: 0 0 25px rgba(0,242,255,0.2);
+    }
+
+    .grid-2, .project-grid, .skill-neon-grid, .visit-grid, .award-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 2rem;
+    }
+
+    /* hero section */
+    .hero-neon {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      background: var(--hero-bg);
+      border-radius: 2.5rem;
+      padding: 2.5rem;
+      border: var(--border-neon);
+      backdrop-filter: blur(8px);
+    }
+    .hero-badge {
+      background: var(--badge-bg);
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+      border: 0.5px solid var(--electric-blue);
+      color: var(--electric-blue);
+    }
+    .profile-img-neon {
+      width: 250px;
+      height: 400px;
+      border-radius: 10%;
+      object-fit: cover;
+      object-position: top;
+      border: 3px solid var(--electric-blue);
+      box-shadow: 0 0 20px rgba(0,102,204,0.3);
+    }
+    body.dark .profile-img-neon {
+      box-shadow: 0 0 30px rgba(0,242,255,0.5);
+    }
+    .btn-neon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(95deg, var(--electric-blue), var(--neon-pink));
+      padding: 0.8rem 2rem;
+      border-radius: 3rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      transition: 0.2s;
+      border: none;
+    }
+    .btn-neon:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--neon-pink);
+    }
+
+    /* tech stack badges */
+    .tech-pill {
+      background: var(--badge-bg);
+      border: 1px solid var(--electric-blue);
+      color: var(--badge-text);
+      padding: 0.3rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .project-marker {
+      width: 40px;
+      height: 4px;
+      background: var(--neon-pink);
+      margin-bottom: 1rem;
+      border-radius: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--footer-border);
+      margin-top: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--electric-blue);
+      width: 48px;
+      height: 48px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 99;
+      box-shadow: 0 0 15px var(--electric-blue);
+      color: white;
+      font-weight: bold;
+    }
+    body.dark .back-to-top {
+      box-shadow: 0 0 15px #00f2ff;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glow-text {
+      color: var(--electric-blue);
+    }
+
+    /* additional text fixes */
+    .neon-card p, .neon-card h3, .neon-card strong, .neon-card span {
+      color: var(--text-primary);
+    }
+    .neon-card i {
+      color: var(--electric-blue);
+    }
+    .section-title i {
+      color: var(--neon-pink);
+      background: none;
+      -webkit-background-clip: unset;
+    }
+    a {
+      color: var(--electric-blue);
+    }
+  </style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav class="navbar">
+  <div class="container nav-flex">
+    <div class="logo-neon">⟡ VINITH </div>
+    <div class="mobile-menu" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">✦ HOME</a></li>
+      <li><a href="#about">✦ ABOUT</a></li>
+      <li><a href="#projects">✦ PROJECTS</a></li>
+      <li><a href="#skills">✦ STACK</a></li>
+      <li><a href="#leadership">✦ LEAD</a></li>
+      <li><a href="#connect">✦ CONNECT</a></li>
+    </ul>
+    <button class="theme-toggle-neon" id="darkModeToggle"><i class="fas fa-moon"></i> DARK MODE</button>
+  </div>
+</nav>
+
+<div class="container">
+  <!-- HERO SECTION — electric first impression -->
+  <section id="home" class="reveal">
+    <div class="hero-neon">
+      <div>
+        <span class="hero-badge"><i class="fas fa-bolt"></i> Reading |Information and Communication Technology (BSc) </span>
+        <h1 style="font-size: 3.3rem; font-weight: 800; line-height: 1.2; color: var(--text-primary);">A.K. <span style="color: var(--electric-blue);">VINITH</span></h1>
+        <p style="font-size: 1.2rem; margin: 0.5rem 0; color: var(--text-secondary);">Faculty of Computing & Technology | University of Kelaniya </p>
+        <div style="display: flex; gap: 0.8rem; margin: 1rem 0; flex-wrap: wrap;">
+          <span class="tech-pill"><i class="fas fa-cube"></i> 3D Animation</span>
+          <span class="tech-pill"><i class="fas fa-gamepad"></i> Game Development</span>
+          <span class="tech-pill"><i class="fas fa-shield-alt"></i> Cybersecurity</span>
+        </div>
+        <p style="max-width: 550px; margin: 1rem 0; color: var(--text-secondary);">Second-year Undergraduate of University of Kelaniya.<br>Passionate about building interactive 3D experiences, game mechanics, and cybersecurity solutions for digital communities.<br><br>I'm a beginner and So far i created some 3D rigs using Blender.</p>
+        <a href="#connect" class="btn-neon"><i class="fas fa-paper-plane"></i> COLLABORATE →</a>
+      </div>
+      <img src="Final.png" alt="Vinith" class="profile-img-neon">
+    </div>
+  </section>
+
+  <!-- ABOUT – fresh -->
+  <section id="about" class="reveal">
+    <h2 class="section-title"><i class="fas fa-user-astronaut"></i> Digital Blueprint</h2>
+    <div class="grid-2">
+      <div class="neon-card"><i class="fas fa-graduation-cap" style="font-size: 2rem; color: var(--neon-pink);"></i><h3 style="margin: 0.8rem 0;">Education</h3><p>I'm an Undergraduate of Bachelors of Information and Computing Technology at the University of Kelaniya.<br>I done my O/L in Mederigama National College and A/L in the Bio System Technology Stream at Pinnawala Central Collage in 2023.</p></div>
+      <div class="neon-card"><i class="fas fa-chart-line" style="font-size: 2rem; color: var(--neon-pink);"></i><h3 style="margin: 0.8rem 0;">Mission</h3><p>My mission is to specialize in Gaming and Animation and become a creative and skilled game developer.<br> I'm learning continuously to expand my knowledge and gain experience in designing,innovation games that deliver better user experience.</p></div>
+      <div class="neon-card"><i class="fas fa-heart" style="font-size: 2rem; color: var(--neon-pink);"></i><h3 style="margin: 0.8rem 0;">Values</h3><p>Creative <br> Continuous Learning <br> Innovation <br> Quality and Excellence <br> Problem solving</p></div>
+    </div>
+  </section>
+
+  <!-- ACADEMIC PROJECTS (3 highlighted) -->
+  <section id="projects" class="reveal">
+    <h2 class="section-title"><i class="fas fa-flask"></i> Signature Builds</h2>
+    <div class="project-grid">
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-hand-peace" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Prosthetic Arm for Three-Finger Loss</h3>
+        <p><strong>Module:</strong> GTEC 12033 - Fundamental Practices in Technology</p>
+        <p><strong>Object:</strong> Prosthetic arm designed for a stakeholder who lost three fingers (index, middle, and ring). Enables <strong>gripping objects</strong> and <strong>typing</strong> functionality. <br> Designed by me using low-cost, accessible materials.</p>
+        <div style="margin-top: 0.8rem;">
+          <span class="tech-pill">Cardboard</span>
+          <span class="tech-pill">Straws</span>
+          <span class="tech-pill">Steel Wires</span>
+          <span class="tech-pill">Prosthetic Design</span>
+        </div>
+        <br>
+        <img src="Hand.jpeg" alt="Prosthetic Arm" style="width: 40%; border-radius: 10px; margin-bottom: 10px;">
+      </div>
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-microchip" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Line Follower · PCB-Based Bot</h3>
+        <p><strong>Module:</strong> GTEC 21023 - Fundamentals of Electronics</p>
+        <p><strong>Tech:</strong> Custom PCB, ATmega328P (bare chip), IR sensors, motor driver circuit</p>
+        <p>Line following robot built on a custom-designed PCB. <br> <strong>My role:</strong> schematic design, PCB layout (KiCad), build PCB , and embedded firmware.</p>
+        <div style="margin-top: 0.8rem;"><span class="tech-pill">PCB Design</span> <span class="tech-pill">KiCad</span> <span class="tech-pill">Embedded C</span></div>
+        <br>
+        <img src="PCB.jpg" alt="Prosthetic Arm" style="width: 100%; border-radius: 10px; margin-bottom: 10px;">
+      </div>
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-paw" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Lost Pet Tracking System </h3>
+        <p><strong>Module:</strong> GTEC 13032 - Projects In Technology - I</p>
+        <p><strong>Tech:</strong> Mobile App, QR Code Scanner, Local Database (SQL)</p>
+        <p>Pet tracking system using QR codes on collars. When scanned via app, owner contact info is displayed. <br><strong>My role:</strong>app development  and database integration. </p>
+        <div style="margin-top: 0.8rem;"><span class="tech-pill">Flutter</span> <span class="tech-pill">QR Code</span> <span class="tech-pill">SQL</span></div>
+        <br>
+        <img src="Bark.jpeg" alt="Prosthetic Arm" style="width: 50%; border-radius: 10px; margin-bottom: 10px;">
+      </div>
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-traffic-light" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Portable Road Violation Detector </h3>
+        <p><strong>Module:</strong> GTEC 23032 - Projects in Technology - II</p>
+        <p><strong>Status:</strong> 🔄 Ongoing Project (not finished yet)</p>
+        <p><strong>Tech:</strong> Raspberry Pi, YOLO, OpenCV, Kaggle Dataset, Camera Module</p>
+        <p>Portable system to detect road violations — specifically <strong>no helmet</strong> and <strong>no seatbelt</strong> using real-time object detection camera. <br> Trained on Kaggle datasets with YOLOv11. </p>
+        <div style="margin-top: 0.8rem;"><span class="tech-pill">Python</span> <span class="tech-pill">YOLO</span> <span class="tech-pill">OpenCV</span> <span class="tech-pill">Raspberry Pi</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS (glow badges) -->
+  <section id="skills" class="reveal">
+    <h2 class="section-title"><i class="fas fa-cogs"></i> Technical Arsenal</h2>
+    <div class="skill-neon-grid">
+      <div class="neon-card"><i class="fas fa-cube"></i> <strong>3D Animation & Design</strong>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem;"><span class="tech-pill">Blender</span><span class="tech-pill">Maya Basics</span><span class="tech-pill">3D Modeling</span><span class="tech-pill">Rigging & Skin</span><span class="tech-pill">Texture Mapping</span><span class="tech-pill">Lighting & Rendering</span></div>
+      </div>
+      <div class="neon-card"><i class="fas fa-code"></i> <strong>Languages & Tools</strong>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem;"><span class="tech-pill">C</span><span class="tech-pill">Python</span><span class="tech-pill">Java</span><span class="tech-pill">SQL</span><span class="tech-pill">Cisco Packet Tracer</span><span class="tech-pill">MS Word</span><span class="tech-pill">MS Excel</span></div>
+      </div>
+      <div class="neon-card"><i class="fas fa-gamepad"></i> <strong>Game Development</strong>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem;"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">2D/3D Game Design</span><span class="tech-pill">Physics & Collision</span></div>
+      </div>
+      <div class="neon-card"><i class="fas fa-microchip"></i> <strong>Hardware</strong>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem;"><span class="tech-pill">PCB Design</span><span class="tech-pill">Arduino</span><span class="tech-pill">Soldering</span><span class="tech-pill">IOT</span><span class="tech-pill">Microcontrollers</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section id="leadership" class="reveal">
+    <h2 class="section-title"><i class="fas fa-user-tie"></i> Clubs & Leadership </h2>
+    <div class="grid-2">
+      <div class="neon-card"><i class="fas fa-seedling"></i> <strong>Enviromental Conservation  </strong><br>Member Of this avenue of Leo Club in University Of Kelaniya.<br> Term 2024/2025</div>
+      <div class="neon-card"><i class="fas fa-paw"></i> <strong> Turtles Release and Clean Beach</strong><br>Joined one day turtle rescue camp organized by Rotaract Club in Panadura Beach.</div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section id="reflections" class="reveal">
+    <h2 class="section-title"><i class="fas fa-brain"></i> Reflection</h2>
+    <div class="grid-2">
+      <div class="neon-card">
+        <div class="project-marker"></div>
+          <i class="fas fa-hand-peace" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Prosthetic Arm for Three-Finger Loss</h3>
+          <p>This project helped me to understand importance of the user-centered design in assitive technology.<br>I learned how to transfer the human needed into functional prototype using simple and low-cost materials.It Also improved my skills in mechanical design and problem solving under constraints.</p>
+      </div>
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-microchip" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Line Follower · PCB-Based Bot</h3>
+        <p>Through this project i gained hands on experience in PCB design and embedded system development.<br> Designing my OWn circuit using KiCad and implementing firmware on an ATMega328P helped me to understand the complete hardware and software intergration process.It also improved my debugging skills and strengthened in building real-world electronic systems from scratch.</p>
+      </div>
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-paw" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Lost Pet Tracking System </h3>
+        <p>This project helped me to understand mobile application development and database integration. <br> I learned how QR-based systems can be used to solve real-life problems efficiently. Working with Flutter and SQL improved my full-stack development thinking and taught me how to design user-friendly and practical solutions for everyday issues.</p>
+      </div>
+      <div class="neon-card">
+        <div class="project-marker"></div>
+        <i class="fas fa-traffic-light" style="font-size: 2rem; color: var(--electric-blue);"></i>
+        <h3 style="margin: 0.5rem 0;">Portable Road Violation Detector </h3>
+        <p>This ongoing project is helping me explore the field of computer vision and AI-based detection systems. Working with YOLO and OpenCV has improved my understanding of real-time object detection and model training. It has also strengthened my skills in Python, dataset handling, and deploying AI models on hardware like Raspberry Pi.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="reveal">
+    <h2 class="section-title"><i class="fas fa-chart-line"></i> Career Goals</h2>
+    <div class="neon-card" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
+      <div><i class="fas fa-briefcase"></i> <strong>Short-term:</strong> <br> <p>I aim to complete my degree specializing in Gaming and Animation on time while actively building industry-ready skills. I am currently focusing on 3D modeling and game design, and improving my proficiency with professional tools such as Blender and Unreal Engine 5. My short-term goal is to strengthen my practical experience by developing projects that align with real industry standards.</p></div>
+      <div><i class="fas fa-graduation-cap"></i> <strong>Long-term:</strong><br> <p>My long-term goal is to become a Lead Animator or Game Designer in a creative studio, where I can design memorable characters and build engaging game experiences. I aim to combine my technical background in computing and embedded systems with creativity in animation and interactive design to develop unique and impactful games.</p></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="connect" class="reveal">
+    <h2 class="section-title"><i class="fas fa-paper-plane"></i> Let's Connect</h2>
+    <div class="neon-card" style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 1rem;">
+      <div>
+        <p><i class="fas fa-envelope"></i> av505048@gmail.com</p>
+        <p><i class="fab fa-whatsapp"></i><a href="https://wa.me/94781194861" target="_blank" style="text-decoration: none;"> +94 78 119 4861</a></p>
+        <p><i class="fab fa-linkedin"></i><a href="https://www.linkedin.com/in/a-k-vinith-8aba6a357" style="text-decoration: none;"> A.K.Vinith</a></p>
+      </div>
+      <div style="font-size: 2.5rem;">
+        <i class="fab fa-github-square"></i> <i class="fab fa-discord"></i> <i class="fas fa-microchip"></i>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 — A.K.Vinith </p>
+    <p style="margin-top: 0.5rem;"><i class="fas fa-bolt"></i> Engineered with curiosity & glow</p>
+  </footer>
+</div>
+<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+  // Intersection Observer for reveal animations
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+  revealElements.forEach(el => observer.observe(el));
+
+  // Dark/Light Mode toggle with proper body class and localStorage
+  const toggleBtn = document.getElementById('darkModeToggle');
+  
+  // Check saved preference
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    toggleBtn.innerHTML = '<i class="fas fa-sun"></i> LIGHT MODE';
+  } else {
+    document.body.classList.remove('dark');
+    toggleBtn.innerHTML = '<i class="fas fa-moon"></i> DARK MODE';
+  }
+  
+  toggleBtn.addEventListener('click', () => {
+    if (document.body.classList.contains('dark')) {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      toggleBtn.innerHTML = '<i class="fas fa-moon"></i> DARK MODE';
+    } else {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      toggleBtn.innerHTML = '<i class="fas fa-sun"></i> LIGHT MODE';
+    }
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('show'));
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('show'));
+  });
+
+  // Back to top button
+  const backTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backTop.style.opacity = window.scrollY > 500 ? '1' : '0';
+  });
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Smooth scroll for navbar links
+  document.querySelectorAll('.nav-links a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const target = document.getElementById(targetId);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
