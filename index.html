@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>A.K.Vinith</title>
-  <!-- Google Fonts + Font Awesome 6 -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -101,7 +100,6 @@
       z-index: 2;
     }
 
-    /* glassmorphic navbar with neon underline */
     .navbar {
       position: sticky;
       top: 1rem;
@@ -200,7 +198,6 @@
       padding-left: 1.2rem;
     }
 
-    /* neon cards - fixed for both themes */
     .neon-card {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
@@ -231,7 +228,6 @@
       gap: 2rem;
     }
 
-    /* hero section */
     .hero-neon {
       display: flex;
       flex-wrap: wrap;
@@ -284,7 +280,6 @@
       box-shadow: 0 0 20px var(--neon-pink);
     }
 
-    /* tech stack badges */
     .tech-pill {
       background: var(--badge-bg);
       border: 1px solid var(--electric-blue);
@@ -349,7 +344,6 @@
       color: var(--electric-blue);
     }
 
-    /* additional text fixes */
     .neon-card p, .neon-card h3, .neon-card strong, .neon-card span {
       color: var(--text-primary);
     }
@@ -386,7 +380,6 @@
 </nav>
 
 <div class="container">
-  <!-- HERO SECTION — electric first impression -->
   <section id="home" class="reveal">
     <div class="hero-neon">
       <div>
@@ -405,7 +398,6 @@
     </div>
   </section>
 
-  <!-- ABOUT – fresh -->
   <section id="about" class="reveal">
     <h2 class="section-title"><i class="fas fa-user-astronaut"></i> Digital Blueprint</h2>
     <div class="grid-2">
@@ -415,7 +407,6 @@
     </div>
   </section>
 
-  <!-- ACADEMIC PROJECTS (3 highlighted) -->
   <section id="projects" class="reveal">
     <h2 class="section-title"><i class="fas fa-flask"></i> Signature Builds</h2>
     <div class="project-grid">
@@ -469,7 +460,6 @@
     </div>
   </section>
 
-  <!-- SKILLS (glow badges) -->
   <section id="skills" class="reveal">
     <h2 class="section-title"><i class="fas fa-cogs"></i> Technical Arsenal</h2>
     <div class="skill-neon-grid">
@@ -488,7 +478,6 @@
     </div>
   </section>
 
-  <!-- LEADERSHIP -->
   <section id="leadership" class="reveal">
     <h2 class="section-title"><i class="fas fa-user-tie"></i> Clubs & Leadership </h2>
     <div class="grid-2">
@@ -497,7 +486,6 @@
     </div>
   </section>
 
-  <!-- REFLECTION -->
   <section id="reflections" class="reveal">
     <h2 class="section-title"><i class="fas fa-brain"></i> Reflection</h2>
     <div class="grid-2">
@@ -529,7 +517,6 @@
     </div>
   </section>
 
-  <!-- ROADMAP -->
   <section id="roadmap" class="reveal">
     <h2 class="section-title"><i class="fas fa-chart-line"></i> Career Goals</h2>
     <div class="neon-card" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
@@ -538,7 +525,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="connect" class="reveal">
     <h2 class="section-title"><i class="fas fa-paper-plane"></i> Let's Connect</h2>
     <div class="neon-card" style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 1rem;">
@@ -561,7 +547,6 @@
 <div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
 
 <script>
-  // Intersection Observer for reveal animations
   const revealElements = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -572,10 +557,8 @@
   }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
   revealElements.forEach(el => observer.observe(el));
 
-  // Dark/Light Mode toggle with proper body class and localStorage
   const toggleBtn = document.getElementById('darkModeToggle');
   
-  // Check saved preference
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark');
     toggleBtn.innerHTML = '<i class="fas fa-sun"></i> LIGHT MODE';
@@ -596,7 +579,7 @@
     }
   });
 
-  // Mobile menu toggle
+
   const menuBtn = document.getElementById('mobileMenuBtn');
   const navLinks = document.getElementById('navLinks');
   menuBtn.addEventListener('click', () => navLinks.classList.toggle('show'));
@@ -604,14 +587,12 @@
     link.addEventListener('click', () => navLinks.classList.remove('show'));
   });
 
-  // Back to top button
   const backTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => {
     backTop.style.opacity = window.scrollY > 500 ? '1' : '0';
   });
   backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // Smooth scroll for navbar links
   document.querySelectorAll('.nav-links a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
